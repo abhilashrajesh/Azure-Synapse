@@ -1,0 +1,25 @@
+name: workspace deployment
+
+on:
+    push:
+        branches: [ workspace_publish ]
+jobs:
+    release:
+        # You also can use the self-hosted runners.
+        runs-on: ubuntu-latest
+        steps:
+        # Checks out your repository under $GITHUB_WORKSPACE, so your job can access it.
+        - uses: actions/checkout@v2
+        #- uses: azure/synapse-workspace-deployment@release-1.0
+        - uses: Azure/Synapse-workspace-deployment@V1.2.2
+          with:
+            TargetWorkspaceName: 'workspace name'
+            TemplateFile: 'path for template file'
+            ParametersFile: 'path for parameter file'
+            environment: 'Azure Public'
+            resourceGroup: 'rg-name'
+            clientId: ${{secrets.CLIENTID}}
+            clientSecret: ${{secrets.CLIENTSECRET}}
+            subscriptionId: 'subid'
+            #OverrideArmParameters: './path of the parameters.yaml'
+            tenantId: ${{secrets.TENANATID}}
